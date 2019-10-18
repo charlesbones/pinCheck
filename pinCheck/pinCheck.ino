@@ -28,7 +28,7 @@ void loop() {
         Serial.println("Send a H or a L");
         stage = 2;
       } else if (incomingByte == 50) {
-        Serial.println("Select the OUTPUT pin");
+        Serial.println("Now, please select the output and input pins.");
         stage = 3;
       }
       break;
@@ -42,14 +42,20 @@ void loop() {
       }
       break;
     case 3:
-      while (!Serial.available());
+      Serial.println("Select the OUTPUT pin");
+      Serial.read();
+      while (Serial.available()== 0x00);
       outPin = Serial.parseInt();
+      Serial.print("Selected pin: ");
+      Serial.println(outPin);
       stage = 4;
       break;
     case 4:
       Serial.println("Select the INPUT pin");
       while (!Serial.available());
       inPin = Serial.parseInt();
+      Serial.print("Selected pin: ");
+      Serial.println(inPin);
       stage = 5;
       break;
     case 5:
@@ -82,4 +88,3 @@ void loop() {
     stage = 0;
   }
 }
-
